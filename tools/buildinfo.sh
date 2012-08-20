@@ -41,5 +41,4 @@ echo "ro.build.description=$PRIVATE_BUILD_DESC"
 echo "ro.build.fingerprint=$BUILD_FINGERPRINT"
 
 echo "ro.cm.device=$CM_DEVICE"
-echo "com.qc.hardware=true"
 echo "# end build properties"
