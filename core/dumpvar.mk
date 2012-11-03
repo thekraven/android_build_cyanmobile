@@ -3,7 +3,11 @@
 # what to add to the path given the config we have chosen.
 ifeq ($(CALLED_FROM_SETUP),true)
 
+ifneq ($(filter /%,$(HOST_OUT_EXECUTABLES)),)
+ABP:=$(HOST_OUT_EXECUTABLES)
+else
 ABP:=$(PWD)/$(HOST_OUT_EXECUTABLES)
+endif
 
 ifeq ($(TARGET_SIMULATOR),true)
 	ABP:=$(ABP):$(TARGET_OUT_EXECUTABLES)
@@ -39,7 +43,11 @@ ifdef dumpvar_goals
   absolute_dumpvar := $(strip $(filter abs-%,$(dumpvar_goals)))
   ifdef absolute_dumpvar
     dumpvar_goals := $(patsubst abs-%,%,$(dumpvar_goals))
-    DUMPVAR_VALUE := $(PWD)/$($(dumpvar_goals))
+    ifneq ($(filter /%,$($(dumpvar_goals))),)
+      DUMPVAR_VALUE := $($(dumpvar_goals))
+    else
+      DUMPVAR_VALUE := $(PWD)/$($(dumpvar_goals))
+    endif
     dumpvar_target := dumpvar-abs-$(dumpvar_goals)
   else
     DUMPVAR_VALUE := $($(dumpvar_goals))
@@ -74,5 +82,6 @@ $(info   HOST_ARCH=$(HOST_ARCH))
 $(info   HOST_OS=$(HOST_OS))
 $(info   HOST_BUILD_TYPE=$(HOST_BUILD_TYPE))
 $(info   BUILD_ID=$(BUILD_ID))
+$(info   OUT_DIR=$(OUT_DIR))
 $(info ============================================)
 endif
