@@ -195,9 +195,6 @@ else
   #    guarantee that they're in this list.
   $(call import-products, $(get-all-product-makefiles))
 endif # TARGET_BUILD_APPS
-$(check-all-products)
-#$(dump-products)
-#$(error done)
 
 # Convert a short name like "sooner" into the path to the product
 # file defining that product.
